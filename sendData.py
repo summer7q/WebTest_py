@@ -6,8 +6,10 @@ terminating = False
 isserver = False
 sended = False
 
+
 def postData():
     requests.post("http://localhost:5000/data", json={"data1": 123, "data2": [3, 4, 5, 6, 3]})
+
 
 def sensorPost():
     global terminating
@@ -23,6 +25,7 @@ def sensorPost():
     except KeyboardInterrupt:
         print("Ctrl+C")
         terminating = True
+
 
 def tcplink(sock, addr):
     global sended

@@ -67,6 +67,10 @@ def server(n):
         terminating = True
         return
 
+def severtest(clientsnum):
+    tcpserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcpserver.bind("0,0,0,0", 8000)
+
 
 
 if __name__ == '__main__':
