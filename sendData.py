@@ -69,4 +69,5 @@ def sensorTCP():
 # 模拟传感器数据上传 通过POST
 if __name__ == '__main__':
     # sensorPost()
-    sensorTCP()
+    # sensorTCP()
+    print('run')

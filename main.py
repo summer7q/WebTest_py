@@ -2,11 +2,21 @@ from flask import Flask, request
 import socket
 import threading
 import time
+import json
+import pymongo
+
 terminating = False
 sended = False
 
 
 app = Flask("test")
+
+def async(f):
+   def wrapper(*arg, **kwargs):
+      th = threading.Thread(target=f, args=arg, kwargs=kwargs)
+      th.setDaemon(True)
+      th.start()
+   return wrapper
 
 @app.route("/data", methods=["POST", "GET"])
 def main():
@@ -16,28 +26,72 @@ def main():
     else:
         return "hello world"
 
-def tcplink(sock, addr):
-    print("connected")
-    global sended
-    # sock.send("Welcome!".encode())
-    try:
-        while not terminating:
-            if not sended:
-                sock.send("hello".encode())
-                sended = True
-            data = sock.recv(1024)
-            if not data:
-                continue
-            print(data.decode())
-            time.sleep(1)
 
-    except Exception as e:
-        print(e)
-        # time.sleep(1)
-        # sock.send("time: %f" % time.time())
+@async
+def testStart(sock, addr, data):
+    """
+
+    :param socket.socket sock:
+    :param str addr:
+    :return:
+    """
+
+
+def testEnd(sock, addr, data):
+    """
+
+    :param socket.socket sock:
+
+    :param str addr:
+    :return:
+    """
+
+def authCheck(sock, data):
+    """
+    
+    :param socket.socket sock: 
+    :param str data: 
+    :return: 
+    """
+    print('Enter authCheck!')
+    sock.send(b'JoinSuccess')
+
+
+
+
+
+@async
+def tcplink(sock, addr):
+    """
+
+    :param socket.socket sock:
+
+    :param str addr:
+    :return:
+    """
+    print('Accept new connection from %s:%s' % addr)
+    sock.send('Connected!'.encode())
+    while True:
+        data = sock.recv(1024)
+        if data:
+            print(data)
+            jsonData = json.loads(data.decode())
+            if jsonData['type'] == 'exit':
+                break
+            elif jsonData['type'] == 'JN':
+                authCheck(sock, jsonData)
+            elif jsonData['type'] == 'TS':
+                testStart(sock, addr, jsonData)
+            elif jsonData['type'] == 'TE':
+                testEnd(sock, addr, jsonData)
+            print('get command type of %s ' % jsonData['type'])
+        else:
+            continue
     sock.close()
-    print("Connection from %s:%s closed." % addr)
-    sended = False
+    print('unconnected with %s:%s ' % addr)
+
+
+
 
 def server(n):
     tcpserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -52,9 +106,7 @@ def server(n):
             try:
                 sock, addr = tcpserver.accept()
                 sock.setblocking(1)
-                t_sock = threading.Thread(target=tcplink, args=(sock, addr))
-                t_sock.setDaemon(True)
-                t_sock.start()
+                tcplink(sock, addr)
             except socket.timeout:
                 pass
             except all:
@@ -67,14 +119,23 @@ def server(n):
         terminating = True
         return
 
-def severtest(clientsnum):
+def servertest(clientsnum):
     tcpserver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcpserver.bind("0,0,0,0", 8000)
+    tcpserver.bind(('0.0.0.0', 8000))
+    tcpserver.listen(5)
+    print('Waiting for connections...')
+    while not terminating:
+        # accept a socket
+        sock, addr = tcpserver.accept()
+        # new threading to process TCP socket
+        tcplink(sock, addr)
+
+
 
 
 
 if __name__ == '__main__':
-    serverListen = threading.Thread(target=server, args=(20,))
+    serverListen = threading.Thread(target=servertest, args=(20,))
     serverListen.start()
     app.run(host="0.0.0.0", port=5000)
 
