@@ -1,15 +1,15 @@
-from flask import Flask, request
+from flask import request
 import socket
 import threading
 import time
 import json
 import pymongo
 
+from app import app
+
 terminating = False
 sended = False
 
-
-app = Flask("test")
 
 def async(f):
    def wrapper(*arg, **kwargs):
@@ -19,7 +19,7 @@ def async(f):
    return wrapper
 
 @app.route("/data", methods=["POST", "GET"])
-def main():
+def data():
     if request.method == "POST":
         print(request.json)
         return "get new post"
@@ -131,12 +131,14 @@ def servertest(clientsnum):
         tcplink(sock, addr)
 
 
-
+def main():
+    from Interfaces.blueprints import blueprint_register
+    serverListen = threading.Thread(target=servertest, args=(20,))
+    serverListen.start()
+    blueprint_register()
+    app.run(host="0.0.0.0", port=5000)
 
 
 if __name__ == '__main__':
-    serverListen = threading.Thread(target=servertest, args=(20,))
-    serverListen.start()
-    app.run(host="0.0.0.0", port=5000)
-
+    main()
 
