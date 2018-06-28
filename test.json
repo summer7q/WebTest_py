@@ -1,8 +1,100 @@
 {
-  "type": "JN",
-  "ack": false,
-  "version": "1.10",
-  "data": {
-
+  "LogIn_Req" :
+  {
+    "type": "LR",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "deviceType": "ECG",
+      "deviceID": "E001",
+      "deviceHost": "112.94.1.22",
+      "devicePort": 8000,
+      "userName": "ECG",
+      "userPassword": "ECG"
+    }
+  },
+  "LogIn_Conf" :
+  {
+    "type": "LC",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "confirm" : false,
+      "faultCode" : "Unknown Device!"
+    }
+  },
+  "NTP_Req" :
+  {
+    "type": "NR",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "NTP_ID" : 1,
+      "deviceType" : "ECG",
+      "deviceID" : "E001",
+      "serverUnixTimestamp" : 1530195155.1992912
+    }
+  },
+  "NTP_Conf" :
+  {
+    "type": "NC",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "NTP_ID" : 1,
+      "deviceType" : "ECG",
+      "deviceID" : "E001",
+      "serverSendUnixTimestamp" : 1530195155.1992912,
+      "deviceRecvUnixTimestamp" : 1530195343.028914,
+      "deviceSendUnixTimestamp" : 1530195402.3677113
+    }
+  },
+  "HeartBeat_Req" : {
+    "type": "HR",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "heartbeatID": 1,
+      "deviceType": "ECG",
+      "deviceID": "E001"
+    }
+  },
+  "HeartBeat_Conf" :
+  {
+    "type": "HC",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "heartbeatID" : 1,
+      "deviceType" : "ECG",
+      "deviceID" : "E001",
+      "isCommand" : true,
+      "Command" : "DataStart"
+    }
+  },
+  "ECG_Data":
+  {
+    "type": "ED",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "deviceID" : "E001",
+      "ecgID" : 1,
+      "dataUnixTimestamp" : 1530196434.9291863,
+      "ECG" : [1000,1000],
+      "heartRate" : [5, 20, 60],
+      "SNR" : -10,
+      "leftElectrode" : 1,
+      "rightElectrode" : 1,
+      "HRV" : 21.21,
+      "autoSearch" : 0,
+      "RpeakTimes" : [1, 101, 300],
+      "RpeakAmplitudes" : [10, 12, 11],
+      "RR_Intervals" :[11,11],
+      "numHRVsamples" : 240,
+      "HRV_Histogram_VLF" : [1,2,3],
+      "HRV_Histogram_LF" : [1,2,3],
+      "HRV_Histogram_HF" : [1,2,3]
+    }
   }
 }
