@@ -7,8 +7,6 @@
     "data": {
       "deviceType": "ECG",
       "deviceID": "E001",
-      "deviceHost": "112.94.1.22",
-      "devicePort": 8000,
       "userName": "ECG",
       "userPassword": "ECG"
     }
@@ -20,7 +18,7 @@
     "version": "0.1",
     "data": {
       "confirm" : false,
-      "faultCode" : "Unknown Device!"
+      "faultCode" : "Unknown Device"
     }
   },
   "NTP_Req" :
@@ -69,7 +67,7 @@
       "deviceType" : "ECG",
       "deviceID" : "E001",
       "isCommand" : true,
-      "Command" : "DataStart"
+      "command" : "DataStart"
     }
   },
   "ECG_Data":
