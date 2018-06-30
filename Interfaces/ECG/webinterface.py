@@ -2,7 +2,7 @@ from Interfaces.blueprints import ecg
 from flask import jsonify, request
 from queue import Queue, Empty
 
-allow_list = ["ECG001", "ECG002"]
+allow_list = ["E001", "E001"]
 
 _taskQ = Queue()
 
@@ -76,7 +76,7 @@ def login():
     try:
         j = request.json
         if j["type"] == "LR" and j["data"]["deviceType"] == "ECG" and j["data"]["deviceID"] in allow_list:
-            pass
+            putTask("DataStart")
         else:
             retdata["data"]["confirm"] = False
             retdata["data"]["faultCode"] = "Unknown Device!"
@@ -86,11 +86,17 @@ def login():
         retdata["data"]["faultCode"] = "Format Error: %s" % repr(e)
         return jsonify(retdata), 404
 
+count = 0
 
 @ecg.route("/senddata", methods=["POST"])
 def senddata():
+    global count
     try:
         data = request.json
+        print(data)
+        count += 1
+        if count > 3:
+            putTask("DataEnd")
         # todo 解析数据
         return "ok", 201
     except Exception as e:
