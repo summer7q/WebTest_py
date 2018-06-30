@@ -91,5 +91,166 @@
       "HRV_Histogram_LF" : [1,2,3],
       "HRV_Histogram_HF" : [1,2,3]
     }
+  },
+  "BVP_Data" :
+  {
+    "type": "BD",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "deviceID" : "V001",
+      "dataUnixTimestamp" : 1530196434.9291863,
+      "bvpID" : 1,
+      "fps" : 30,
+      "dataB" : [0.0],
+      "dataG" : [0.0],
+      "dataR" : [0.0]
+    }
+  },
+  "TestStart" :
+  {
+    "type": "TS",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "deviceID" : "C001",
+      "testStartTime" : 1530196434.9291863,
+      "testeeInfo" :
+      {
+        "name" : "张三",
+        "IDnumber" : "200000000000000000",
+        "gender" : "male"
+      },
+      "commit" : "test1"
+    }
+  },
+  "VideoValid_Conf" :
+  {
+    "type": "VC",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "deviceID" : "V001",
+      "status" : true,
+      "faultCode" : "Pass"
+    }
+  },
+  "VideoException" :
+  {
+    "type": "VE",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "deviceID" : "V001",
+      "faultCode" : "testeeToFarFromCamera"
+    }
+  },
+  "SensorOnline" :
+  {
+    "type": "SO",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "status" : false,
+      "ecgStatus" : false,
+      "ecgDeviceID" : "E001",
+      "videoStatus" : true,
+      "videoDeviceID" : "V001"
+    }
+  },
+  "SensorReady" :
+  {
+    "type": "SR",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "status" : false,
+      "faultDeviceID" : ["V001", "E001"],
+      "faultCode" : ["NoDetectedFace", "SNR > threshold"]
+    }
+  },
+  "PhysData" :
+  {
+    "type": "PD",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "physID" : 10,
+      "ecgFreq" : 1000,
+      "ecgUnixTimestamp" : 1530343514.2190752,
+      "ecgData" : [0, 0]
+    }
+  },
+  "TestReady" :
+  {
+    "type": "TR",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "status" : true,
+      "faultCode" : "",
+      "BVP" : 59.32,
+      "physValue" : 20.2
+    }
+  },
+  "AnsStart" :
+  {
+    "type": "AS",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "ansID" : 1,
+      "question" : "可选",
+      "ansStartTime" : 1530343514.2190752
+    }
+  },
+  "AnsEnd_Req" :
+  {
+    "type": "AR",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "ansID" : 1,
+      "answer" : "可选",
+      "ansEndTime" : 1530343514.2190752
+    }
+  },
+  "AnsEnd_Conf" :
+  {
+    "type": "AC",
+    "ack": true,
+    "version": "0.1",
+    "data": {
+      "ansID" : 1,
+      "physValue" : 20.2,
+      "BVP" : 59.32
+    }
+  },
+  "SensorException" :
+  {
+    "type": "SE",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "faultDeviceID" : "E001",
+      "faultCode" : "SNR > threshold"
+    }
+  },
+  "TestEnd" :
+  {
+    "type": "TE",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+      "testEndTime" : 1530345766.4901862
+    }
+  },
+  "LogOut" :
+  {
+    "type": "LO",
+    "ack": false,
+    "version": "0.1",
+    "data": {
+    }
   }
 }
