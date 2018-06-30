@@ -64,9 +64,6 @@
     "version": "0.1",
     "data": {
       "heartbeatID" : 1,
-      "deviceType" : "ECG",
-      "deviceID" : "E001",
-      "isCommand" : true,
       "command" : "DataStart"
     }
   },
